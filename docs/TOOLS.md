@@ -327,26 +327,3 @@ This document tracks the implementation status of all drawing tools for the ligh
 
 ---
 
-# Changelog
-
-## v0.3.0 (Current)
-- **68 tools implemented** (+6 from v0.2.0)
-- Full support for: Lines, Channels, Pitchforks, Fibonacci, Gann, Measurement, Shapes, Annotations
-- New annotation tools: Pin, Comment, Signpost, Table
-- New forecasting tools: Forecast, Bars Pattern
-- Remaining: Volume-based tools (3), Ghost Feed, Content tools (3)
-
-## v0.2.0
-- **62 tools implemented** (+5 from v0.1.0)
-- Full support for: Lines, Channels, Pitchforks, Fibonacci, Gann, Measurement, Shapes
-- Partial support for: Annotations (7/11), Forecasting (3/6)
-- New shape tools: Rotated Rectangle, Path, Polyline, Curve, Double Curve
-- Interactive text editing for annotation tools (double-click to edit)
-- Demo application with all tools available
-
-## v0.1.0
-- **57 tools implemented**
-- Full support for: Lines, Channels, Pitchforks, Fibonacci, Gann, Measurement
-- Partial support for: Shapes (5/10), Annotations (7/11), Forecasting (3/6)
-- Interactive text editing for annotation tools (double-click to edit)
-- Demo application with all tools available

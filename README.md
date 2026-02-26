@@ -103,23 +103,6 @@ const registry = getToolRegistry();
 const allTools = registry.getAllTools();
 ```
 
-## Screenshots
-
-### Trend Line Tools
-![Trend Line Tools](docs/trend%20line%20tools.png)
-
-### Gann & Fibonacci Tools
-![Gann and Fibonacci Tools](docs/Gann%20and%20Fibonacci%20tools.png)
-
-### Forecasting & Measurement Tools
-![Forecasting and Measurement Tools](docs/Forcasting%20and%20measurement%20tool.png)
-
-### Geometric Shapes
-![Geometric Shapes](docs/geometric%20shapes.png)
-
-### Annotation Tools
-![Annotation Tools](docs/Annotation%20tool.png)
-
 ## Available Drawing Tools (68)
 
 ### Lines
