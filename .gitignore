@@ -22,5 +22,8 @@ npm-debug.log*
 # Test coverage
 coverage/
 
+# Claude
+.claude/
+
 # Misc
 *.local
