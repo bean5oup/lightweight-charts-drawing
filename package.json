@@ -1,6 +1,6 @@
 {
   "name": "lightweight-charts-drawing",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Drawing tools plugin for TradingView's lightweight-charts",
   "type": "module",
   "main": "./dist/lightweight-charts-drawing.umd.js",
