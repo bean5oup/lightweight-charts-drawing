@@ -2,7 +2,7 @@
 
 **[Live Demo](https://deepentropy.github.io/lightweight-charts-drawing/)**
 
-68 professional drawing tools for TradingView's lightweight-charts library. Includes trend lines, Fibonacci tools, Gann analysis, channels, pitchforks, shapes, annotations, and forecasting tools.
+68 drawing tools for TradingView's lightweight-charts library. Includes trend lines, Fibonacci tools, Gann analysis, channels, pitchforks, shapes, annotations, and forecasting tools.
 
 ## Installation
 
