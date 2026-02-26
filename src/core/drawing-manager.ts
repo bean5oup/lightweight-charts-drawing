@@ -68,7 +68,7 @@ export class DrawingManager {
 
     // Attach all existing drawings
     for (const drawing of this._drawings.values()) {
-      drawing.attach(series, chart);
+      drawing.attach(series, chart, this._container ?? undefined);
     }
 
     // Subscribe to chart events
@@ -131,7 +131,7 @@ export class DrawingManager {
 
     // Attach to chart if manager is attached
     if (this._isAttached && this._series && this._chart) {
-      drawing.attach(this._series, this._chart);
+      drawing.attach(this._series, this._chart, this._container ?? undefined);
     }
 
     this.emit('drawing:added', { drawingId: drawing.id, drawing });

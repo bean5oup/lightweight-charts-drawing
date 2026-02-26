@@ -17,3 +17,11 @@ export { DatePriceRangePaneView } from './date-price-range-pane-view';
 // Projection
 export { Projection, type ProjectionOptions } from './projection';
 export { ProjectionPaneView } from './projection-pane-view';
+
+// Forecast
+export { Forecast, type ForecastOptions } from './forecast';
+export { ForecastPaneView } from './forecast-pane-view';
+
+// BarsPattern
+export { BarsPattern, type BarsPatternOptions } from './bars-pattern';
+export { BarsPatternPaneView } from './bars-pattern-pane-view';

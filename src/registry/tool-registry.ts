@@ -62,6 +62,13 @@ import { Note } from '../tools/annotations/note';
 import { PriceNote } from '../tools/annotations/price-note';
 import { PriceLabel } from '../tools/annotations/price-label';
 import { FlagMark } from '../tools/annotations/flag-mark';
+import { Pin } from '../tools/annotations/pin';
+import { Comment } from '../tools/annotations/comment';
+import { Signpost } from '../tools/annotations/signpost';
+import { Table } from '../tools/annotations/table';
+
+import { Forecast } from '../tools/forecasting/forecast';
+import { BarsPattern } from '../tools/forecasting/bars-pattern';
 
 import { Ellipse } from '../tools/shapes/ellipse';
 import { Arc } from '../tools/shapes/arc';
@@ -527,6 +534,48 @@ const TOOL_DEFINITIONS: ToolRegistryEntry[] = [
     category: 'annotation',
     requiredAnchors: 1,
     factory: (id, anchors, style, options) => new FlagMark(id, anchors, style, options),
+  },
+  {
+    type: 'pin',
+    name: 'Pin',
+    category: 'annotation',
+    requiredAnchors: 1,
+    factory: (id, anchors, style, options) => new Pin(id, anchors, style, options),
+  },
+  {
+    type: 'comment',
+    name: 'Comment',
+    category: 'annotation',
+    requiredAnchors: 1,
+    factory: (id, anchors, style, options) => new Comment(id, anchors, style, options),
+  },
+  {
+    type: 'signpost',
+    name: 'Signpost',
+    category: 'annotation',
+    requiredAnchors: 1,
+    factory: (id, anchors, style, options) => new Signpost(id, anchors, style, options),
+  },
+  {
+    type: 'table',
+    name: 'Table',
+    category: 'annotation',
+    requiredAnchors: 1,
+    factory: (id, anchors, style, options) => new Table(id, anchors, style, options),
+  },
+  {
+    type: 'forecast',
+    name: 'Forecast',
+    category: 'forecasting',
+    requiredAnchors: 2,
+    factory: (id, anchors, style, options) => new Forecast(id, anchors, style, options),
+  },
+  {
+    type: 'bars-pattern',
+    name: 'Bars Pattern',
+    category: 'forecasting',
+    requiredAnchors: 3,
+    factory: (id, anchors, style, options) => new BarsPattern(id, anchors, style, options),
   },
 ];
 

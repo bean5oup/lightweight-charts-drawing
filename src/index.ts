@@ -33,7 +33,6 @@ export {
   type DrawingEventCallback,
   type IDrawing,
   type ControlPoint,
-  type HitTestResult,
   // Constants
   DEFAULT_DRAWING_STYLE,
 } from './core';
@@ -288,6 +287,12 @@ export {
   Projection,
   ProjectionPaneView,
   type ProjectionOptions,
+  Forecast,
+  ForecastPaneView,
+  type ForecastOptions,
+  BarsPattern,
+  BarsPatternPaneView,
+  type BarsPatternOptions,
 } from './tools/forecasting';
 
 // ============ Annotation Tools ============
@@ -330,6 +335,18 @@ export {
   FlagMarkPaneView,
   type FlagMarkOptions,
   type FlagColor,
+  Pin,
+  PinPaneView,
+  type PinOptions,
+  Comment,
+  CommentPaneView,
+  type CommentOptions,
+  Signpost,
+  SignpostPaneView,
+  type SignpostOptions,
+  Table,
+  TablePaneView,
+  type TableOptions,
 } from './tools/annotations';
 
 // ============ Tool Registry ============

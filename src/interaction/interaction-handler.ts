@@ -3,7 +3,7 @@ import type { Anchor, Point, MouseEventData, PixelToChartFn, SnapConfig } from '
 /**
  * Interaction states for the FSM
  */
-export type InteractionState = 'idle' | 'placing' | 'drawing' | 'editing' | 'complete';
+export type InteractionState = 'idle' | 'placing' | 'editing' | 'complete';
 
 /**
  * Configuration for interaction handler

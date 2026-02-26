@@ -10,6 +10,10 @@ import {
   Note,
   PriceNote,
   FlagMark,
+  Pin,
+  Comment,
+  Signpost,
+  Table,
 } from '../src';
 
 // Text-based drawing types that support editing
@@ -20,6 +24,10 @@ const TEXT_DRAWING_TYPES = [
   'note',
   'price-note',
   'flag-mark',
+  'pin',
+  'comment',
+  'signpost',
+  'table',
 ];
 
 // Load SPY data from CSV
@@ -281,6 +289,12 @@ class DrawingDemo {
       'price-note': '#26A69A',
       'price-label': '#2962FF',
       'flag-mark': '#EF5350',
+      'pin': '#E91E63',
+      'comment': '#2962FF',
+      'signpost': '#FF9800',
+      'table': '#607D8B',
+      'forecast': '#26A69A',
+      'bars-pattern': '#FF9800',
     };
     return colors[toolType] || '#2962FF';
   }
@@ -457,6 +471,7 @@ class DrawingDemo {
 
     if (drawing) {
       this.drawingManager.addDrawing(drawing);
+      this.drawingManager.selectDrawing(drawing.id);
       this.updateDrawingList();
     }
   }
@@ -619,6 +634,10 @@ class DrawingDemo {
       'note': 'Edit Note',
       'price-note': 'Edit Price Note',
       'flag-mark': 'Edit Flag Label',
+      'pin': 'Edit Pin Label',
+      'comment': 'Edit Comment',
+      'signpost': 'Edit Signpost',
+      'table': 'Edit Table (tab-separated)',
     };
     title.textContent = typeNames[drawing.type] || 'Edit Text';
 
@@ -663,6 +682,14 @@ class DrawingDemo {
         return (drawing as PriceNote).getNote();
       case 'flag-mark':
         return (drawing as FlagMark).getLabel();
+      case 'pin':
+        return (drawing as Pin).getLabel();
+      case 'comment':
+        return (drawing as Comment).getText();
+      case 'signpost':
+        return (drawing as Signpost).getText();
+      case 'table':
+        return (drawing as Table).getRows().map(r => r.join('\t')).join('\n');
       default:
         return '';
     }
@@ -687,6 +714,18 @@ class DrawingDemo {
         break;
       case 'flag-mark':
         (drawing as FlagMark).setLabel(text);
+        break;
+      case 'pin':
+        (drawing as Pin).setLabel(text);
+        break;
+      case 'comment':
+        (drawing as Comment).setText(text);
+        break;
+      case 'signpost':
+        (drawing as Signpost).setText(text);
+        break;
+      case 'table':
+        (drawing as Table).setRows(text.split('\n').map(line => line.split('\t')));
         break;
     }
   }

@@ -3,7 +3,6 @@ import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'f
 
 import type { FibCircles } from './fib-circles';
 import { FIB_CIRCLE_LEVELS } from './fib-circles';
-import type { Point, Viewport } from '../../core/types';
 import { distanceBetweenPoints } from '../../core/geometry';
 import { applyStyle, drawControlPoints, drawText } from '../../rendering/canvas-utils';
 
@@ -40,14 +39,14 @@ class FibCirclesPaneRenderer implements IPrimitivePaneRenderer {
     const { context: ctx, horizontalPixelRatio } = scope;
     const pixelRatio = horizontalPixelRatio;
 
-    const viewport = (this._drawing as any).getViewport() as Viewport | null;
+    const viewport = this._drawing.getViewport();
     if (!viewport) return;
     if (!this._drawing.options.visible) return;
     if (!this._drawing.isValid()) return;
 
     const anchors = this._drawing.anchors;
-    const p1 = this.anchorToPixel(anchors[0], viewport); // Center
-    const p2 = this.anchorToPixel(anchors[1], viewport); // Radius point
+    const p1 = this._drawing.anchorToPixel(anchors[0], viewport); // Center
+    const p2 = this._drawing.anchorToPixel(anchors[1], viewport); // Radius point
 
     if (!p1 || !p2) return;
 
@@ -101,12 +100,5 @@ class FibCirclesPaneRenderer implements IPrimitivePaneRenderer {
       const controlPoints = this._drawing.getControlPoints(viewport);
       drawControlPoints(ctx, controlPoints, null, pixelRatio);
     }
-  }
-
-  private anchorToPixel(anchor: { time: any; price: number }, viewport: Viewport): Point | null {
-    const x = viewport.timeScale.timeToCoordinate(anchor.time);
-    const y = viewport.priceScale.priceToCoordinate(anchor.price);
-    if (x === null || y === null) return null;
-    return { x, y };
   }
 }

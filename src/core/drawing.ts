@@ -38,6 +38,7 @@ export abstract class Drawing implements IDrawing {
 
   protected _series: ISeriesApi<SeriesType> | null = null;
   protected _chart: IChartApi | null = null;
+  protected _container: HTMLElement | null = null;
   protected _requestUpdateFn: (() => void) | null = null;
 
   constructor(
@@ -99,12 +100,13 @@ export abstract class Drawing implements IDrawing {
 
   // ============ Lifecycle ============
 
-  attach(series: ISeriesApi<SeriesType>, chart: IChartApi): void {
+  attach(series: ISeriesApi<SeriesType>, chart: IChartApi, container?: HTMLElement): void {
     if (this._series) {
       this.detach();
     }
     this._series = series;
     this._chart = chart;
+    this._container = container ?? null;
     series.attachPrimitive(this);
   }
 
@@ -113,6 +115,7 @@ export abstract class Drawing implements IDrawing {
       this._series.detachPrimitive(this);
       this._series = null;
       this._chart = null;
+      this._container = null;
       this._requestUpdateFn = null;
     }
   }
@@ -138,6 +141,7 @@ export abstract class Drawing implements IDrawing {
   detached(): void {
     this._chart = null;
     this._series = null;
+    this._container = null;
     this._requestUpdateFn = null;
   }
 
@@ -263,7 +267,7 @@ export abstract class Drawing implements IDrawing {
 
   // ============ Coordinate Conversion ============
 
-  protected anchorToPixel(anchor: Anchor, viewport: Viewport): Point | null {
+  anchorToPixel(anchor: Anchor, viewport: Viewport): Point | null {
     const x = viewport.timeScale.timeToCoordinate(anchor.time);
     const y = viewport.priceScale.priceToCoordinate(anchor.price);
 
@@ -281,16 +285,14 @@ export abstract class Drawing implements IDrawing {
     return { time, price };
   }
 
-  protected getViewport(): Viewport | null {
+  getViewport(): Viewport | null {
     if (!this._chart || !this._series) return null;
 
     const timeScale = this._chart.timeScale();
-    // Get chart container height as fallback
-    const chartElement = (this._chart as any).chartElement?.() as HTMLElement | undefined;
-    const height = chartElement?.clientHeight ?? 400;
+    const height = this._container?.clientHeight ?? 400;
 
     return {
-      width: this._chart.timeScale().width(),
+      width: timeScale.width(),
       height,
       timeScale: {
         coordinateToTime: (x: number) => timeScale.coordinateToTime(x),

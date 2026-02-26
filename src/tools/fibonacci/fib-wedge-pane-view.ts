@@ -3,7 +3,6 @@ import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'f
 
 import type { FibWedge } from './fib-wedge';
 import { FIB_WEDGE_LEVELS } from './fib-wedge';
-import type { Point, Viewport } from '../../core/types';
 import { applyStyle, drawLine, drawControlPoints, drawText } from '../../rendering/canvas-utils';
 
 export class FibWedgePaneView implements IPrimitivePaneView {
@@ -39,15 +38,15 @@ class FibWedgePaneRenderer implements IPrimitivePaneRenderer {
     const { context: ctx, horizontalPixelRatio } = scope;
     const pixelRatio = horizontalPixelRatio;
 
-    const viewport = (this._drawing as any).getViewport() as Viewport | null;
+    const viewport = this._drawing.getViewport();
     if (!viewport) return;
     if (!this._drawing.options.visible) return;
     if (!this._drawing.isValid()) return;
 
     const anchors = this._drawing.anchors;
-    const apex = this.anchorToPixel(anchors[0], viewport);
-    const p1 = this.anchorToPixel(anchors[1], viewport);
-    const p2 = this.anchorToPixel(anchors[2], viewport);
+    const apex = this._drawing.anchorToPixel(anchors[0], viewport);
+    const p1 = this._drawing.anchorToPixel(anchors[1], viewport);
+    const p2 = this._drawing.anchorToPixel(anchors[2], viewport);
 
     if (!apex || !p1 || !p2) return;
 
@@ -104,12 +103,5 @@ class FibWedgePaneRenderer implements IPrimitivePaneRenderer {
       const controlPoints = this._drawing.getControlPoints(viewport);
       drawControlPoints(ctx, controlPoints, null, pixelRatio);
     }
-  }
-
-  private anchorToPixel(anchor: { time: any; price: number }, viewport: Viewport): Point | null {
-    const x = viewport.timeScale.timeToCoordinate(anchor.time);
-    const y = viewport.priceScale.priceToCoordinate(anchor.price);
-    if (x === null || y === null) return null;
-    return { x, y };
   }
 }

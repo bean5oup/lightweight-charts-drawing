@@ -84,13 +84,26 @@ export abstract class BaseLine extends Drawing {
   // ============ Utility Methods ============
 
   /**
+   * Convert a Time value to epoch seconds.
+   * Handles numeric timestamps, "YYYY-MM-DD" strings, and BusinessDay objects.
+   */
+  protected static timeToSeconds(time: any): number {
+    if (typeof time === 'number') return time;
+    if (typeof time === 'string') return new Date(time).getTime() / 1000;
+    if (typeof time === 'object' && time !== null && 'year' in time) {
+      return new Date(time.year, time.month - 1, time.day).getTime() / 1000;
+    }
+    return NaN;
+  }
+
+  /**
    * Get the angle of the line in degrees
    */
   getAngle(): number {
     if (!this.isValid()) return 0;
 
     const dx = this._anchors[1].price - this._anchors[0].price;
-    const dt = Number(this._anchors[1].time) - Number(this._anchors[0].time);
+    const dt = BaseLine.timeToSeconds(this._anchors[1].time) - BaseLine.timeToSeconds(this._anchors[0].time);
 
     return Math.atan2(dx, dt) * (180 / Math.PI);
   }
@@ -110,10 +123,12 @@ export abstract class BaseLine extends Drawing {
   }
 
   /**
-   * Get the time span between anchors in bars
+   * Get the time span between anchors in bars (calendar days)
    */
   getTimeSpan(): number {
     if (!this.isValid()) return 0;
-    return Math.abs(Number(this._anchors[1].time) - Number(this._anchors[0].time));
+    const t0 = BaseLine.timeToSeconds(this._anchors[0].time);
+    const t1 = BaseLine.timeToSeconds(this._anchors[1].time);
+    return Math.round(Math.abs(t1 - t0) / 86400);
   }
 }

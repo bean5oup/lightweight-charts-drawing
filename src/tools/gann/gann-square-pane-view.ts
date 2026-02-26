@@ -3,7 +3,7 @@ import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'f
 
 import type { GannSquare } from './gann-square';
 import { GANN_SQUARE_DIVISIONS } from './gann-square';
-import type { Point, Viewport } from '../../core/types';
+import type { Point } from '../../core/types';
 import { applyStyle, drawLine, drawRect, drawControlPoints } from '../../rendering/canvas-utils';
 
 export class GannSquarePaneView implements IPrimitivePaneView {
@@ -39,13 +39,13 @@ class GannSquarePaneRenderer implements IPrimitivePaneRenderer {
     const { context: ctx, horizontalPixelRatio } = scope;
     const pixelRatio = horizontalPixelRatio;
 
-    const viewport = (this._drawing as any).getViewport() as Viewport | null;
+    const viewport = this._drawing.getViewport();
     if (!viewport) return;
     if (!this._drawing.options.visible) return;
     if (!this._drawing.isValid()) return;
 
     const anchors = this._drawing.anchors;
-    const center = this.anchorToPixel(anchors[0], viewport);
+    const center = this._drawing.anchorToPixel(anchors[0], viewport);
 
     if (!center) return;
 
@@ -224,12 +224,5 @@ class GannSquarePaneRenderer implements IPrimitivePaneRenderer {
 
       layer++;
     }
-  }
-
-  private anchorToPixel(anchor: { time: any; price: number }, viewport: Viewport): Point | null {
-    const x = viewport.timeScale.timeToCoordinate(anchor.time);
-    const y = viewport.priceScale.priceToCoordinate(anchor.price);
-    if (x === null || y === null) return null;
-    return { x, y };
   }
 }

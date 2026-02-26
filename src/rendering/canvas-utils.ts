@@ -56,34 +56,33 @@ export function drawDashedLine(
 }
 
 /**
- * Draw a control point (anchor handle)
+ * Draw a control point (anchor handle) in TradingView style:
+ * dark filled center with a colored ring.
  */
 export function drawControlPoint(
   ctx: CanvasRenderingContext2D,
   point: ControlPoint,
   isActive: boolean = false,
-  pixelRatio: number = 1
+  pixelRatio: number = 1,
+  lineColor: string = '#2962FF'
 ): void {
   const x = point.x * pixelRatio;
   const y = point.y * pixelRatio;
-  const radius = point.radius * pixelRatio;
+  const radius = 4 * pixelRatio;
+  const ringWidth = 1.5 * pixelRatio;
 
+  // Dark filled center
   ctx.beginPath();
   ctx.arc(x, y, radius, 0, Math.PI * 2);
+  ctx.fillStyle = '#131722';
+  ctx.fill();
 
-  if (isActive) {
-    ctx.fillStyle = '#2196F3';
-    ctx.fill();
-    ctx.strokeStyle = '#ffffff';
-    ctx.lineWidth = 2 * pixelRatio;
-    ctx.stroke();
-  } else {
-    ctx.fillStyle = '#ffffff';
-    ctx.fill();
-    ctx.strokeStyle = '#2196F3';
-    ctx.lineWidth = 2 * pixelRatio;
-    ctx.stroke();
-  }
+  // Colored ring
+  ctx.beginPath();
+  ctx.arc(x, y, radius - ringWidth / 2, 0, Math.PI * 2);
+  ctx.strokeStyle = isActive ? '#ffffff' : lineColor;
+  ctx.lineWidth = ringWidth;
+  ctx.stroke();
 }
 
 /**
@@ -93,10 +92,11 @@ export function drawControlPoints(
   ctx: CanvasRenderingContext2D,
   points: ControlPoint[],
   activeIndex: number | null = null,
-  pixelRatio: number = 1
+  pixelRatio: number = 1,
+  lineColor: string = '#2962FF'
 ): void {
   for (const point of points) {
-    drawControlPoint(ctx, point, point.index === activeIndex, pixelRatio);
+    drawControlPoint(ctx, point, point.index === activeIndex, pixelRatio, lineColor);
   }
 }
 
@@ -258,7 +258,7 @@ export function drawLabel(
 
   const metrics = ctx.measureText(text);
   const textWidth = metrics.width;
-  const textHeight = parseInt(font) || 12;
+  const textHeight = parseInt(font.match(/(\d+)px/)?.[1] ?? '12');
 
   const x = position.x * pixelRatio;
   const y = position.y * pixelRatio;

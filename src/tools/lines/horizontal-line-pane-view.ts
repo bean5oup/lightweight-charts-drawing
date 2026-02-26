@@ -2,7 +2,7 @@ import type { IPrimitivePaneView, IPrimitivePaneRenderer } from 'lightweight-cha
 import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'fancy-canvas';
 
 import type { HorizontalLine } from './horizontal-line';
-import type { Point, Viewport } from '../../core/types';
+import type { Point } from '../../core/types';
 import { applyStyle, drawLine, drawControlPoints, drawLabel } from '../../rendering/canvas-utils';
 
 export class HorizontalLinePaneView implements IPrimitivePaneView {
@@ -38,7 +38,7 @@ class HorizontalLinePaneRenderer implements IPrimitivePaneRenderer {
     const { context: ctx, horizontalPixelRatio } = scope;
     const pixelRatio = horizontalPixelRatio;
 
-    const viewport = (this._drawing as any).getViewport() as Viewport | null;
+    const viewport = this._drawing.getViewport();
     if (!viewport) return;
     if (!this._drawing.options.visible) return;
     if (!this._drawing.isValid()) return;

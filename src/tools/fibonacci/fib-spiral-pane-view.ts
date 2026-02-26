@@ -3,7 +3,7 @@ import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'f
 
 import type { FibSpiral } from './fib-spiral';
 import { GOLDEN_RATIO } from './fib-spiral';
-import type { Point, Viewport } from '../../core/types';
+import type { Point } from '../../core/types';
 import { distanceBetweenPoints } from '../../core/geometry';
 import { applyStyle, drawControlPoints } from '../../rendering/canvas-utils';
 
@@ -40,14 +40,14 @@ class FibSpiralPaneRenderer implements IPrimitivePaneRenderer {
     const { context: ctx, horizontalPixelRatio } = scope;
     const pixelRatio = horizontalPixelRatio;
 
-    const viewport = (this._drawing as any).getViewport() as Viewport | null;
+    const viewport = this._drawing.getViewport();
     if (!viewport) return;
     if (!this._drawing.options.visible) return;
     if (!this._drawing.isValid()) return;
 
     const anchors = this._drawing.anchors;
-    const p1 = this.anchorToPixel(anchors[0], viewport); // Center
-    const p2 = this.anchorToPixel(anchors[1], viewport); // Size reference
+    const p1 = this._drawing.anchorToPixel(anchors[0], viewport); // Center
+    const p2 = this._drawing.anchorToPixel(anchors[1], viewport); // Size reference
 
     if (!p1 || !p2) return;
 
@@ -129,12 +129,5 @@ class FibSpiralPaneRenderer implements IPrimitivePaneRenderer {
     }
 
     ctx.globalAlpha = 1;
-  }
-
-  private anchorToPixel(anchor: { time: any; price: number }, viewport: Viewport): Point | null {
-    const x = viewport.timeScale.timeToCoordinate(anchor.time);
-    const y = viewport.priceScale.priceToCoordinate(anchor.price);
-    if (x === null || y === null) return null;
-    return { x, y };
   }
 }

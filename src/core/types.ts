@@ -42,14 +42,14 @@ export interface DrawingStyle {
  * Default drawing style
  */
 export const DEFAULT_DRAWING_STYLE: DrawingStyle = {
-  lineColor: '#2196F3',
+  lineColor: '#2962FF',
   lineWidth: 2,
   lineDash: [],
-  fillColor: 'rgba(33, 150, 243, 0.1)',
+  fillColor: 'rgba(41, 98, 255, 0.1)',
   fillOpacity: 0.1,
   showLabels: true,
   labelFont: '12px sans-serif',
-  labelColor: '#2196F3',
+  labelColor: '#2962FF',
 };
 
 /**
@@ -193,7 +193,7 @@ export interface IDrawing {
   state: DrawingState;
 
   // Lifecycle
-  attach(series: ISeriesApi<SeriesType>, chart: IChartApi): void;
+  attach(series: ISeriesApi<SeriesType>, chart: IChartApi, container?: HTMLElement): void;
   detach(): void;
   isAttached(): boolean;
 
@@ -217,19 +217,14 @@ export interface IDrawing {
   // Clone
   clone(newId: string): IDrawing;
 
+  // Viewport
+  getViewport(): Viewport | null;
+
   // Request update
   requestUpdate(): void;
 
   // Pane views for rendering
   paneViews(): IPrimitivePaneView[];
-}
-
-/**
- * Pane view for lightweight-charts rendering
- */
-export interface IDrawingPaneView extends IPrimitivePaneView {
-  // Marker for type checking
-  __drawingPaneView: true;
 }
 
 /**
@@ -242,11 +237,3 @@ export interface ControlPoint {
   radius: number;
 }
 
-/**
- * Hit test result
- */
-export interface HitTestResult {
-  hit: boolean;
-  anchorIndex: number | null;
-  distance: number;
-}

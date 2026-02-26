@@ -52,7 +52,7 @@ class TrendLinePaneRenderer implements IPrimitivePaneRenderer {
     const pixelRatio = horizontalPixelRatio;
 
     // Get viewport
-    const viewport = (this._drawing as any).getViewport() as Viewport | null;
+    const viewport = this._drawing.getViewport();
     if (!viewport) return;
 
     // Check visibility
@@ -63,8 +63,8 @@ class TrendLinePaneRenderer implements IPrimitivePaneRenderer {
 
     // Get anchor points
     const anchors = this._drawing.anchors;
-    const start = this.anchorToPixel(anchors[0], viewport);
-    const end = this.anchorToPixel(anchors[1], viewport);
+    const start = this._drawing.anchorToPixel(anchors[0], viewport);
+    const end = this._drawing.anchorToPixel(anchors[1], viewport);
 
     if (!start || !end) return;
 
@@ -77,11 +77,11 @@ class TrendLinePaneRenderer implements IPrimitivePaneRenderer {
     // Render labels if enabled
     this.renderLabels(ctx, start, end, pixelRatio);
 
-    // Draw control points if selected
+    // Draw control points if selected, editing, or hovered
     const state = this._drawing.state;
-    if (state === 'selected' || state === 'editing') {
+    if (state === 'selected' || state === 'editing' || state === 'hovered') {
       const controlPoints = this._drawing.getControlPoints(viewport);
-      drawControlPoints(ctx, controlPoints, null, pixelRatio);
+      drawControlPoints(ctx, controlPoints, null, pixelRatio, this._drawing.style.lineColor);
     }
   }
 
@@ -179,14 +179,5 @@ class TrendLinePaneRenderer implements IPrimitivePaneRenderer {
       },
       pixelRatio
     );
-  }
-
-  private anchorToPixel(anchor: { time: any; price: number }, viewport: Viewport): Point | null {
-    const x = viewport.timeScale.timeToCoordinate(anchor.time);
-    const y = viewport.priceScale.priceToCoordinate(anchor.price);
-
-    if (x === null || y === null) return null;
-
-    return { x, y };
   }
 }

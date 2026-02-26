@@ -2,7 +2,6 @@ import type { IPrimitivePaneView, IPrimitivePaneRenderer } from 'lightweight-cha
 import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'fancy-canvas';
 
 import type { Note } from './note';
-import type { Point, Viewport } from '../../core/types';
 import { drawControlPoints } from '../../rendering/canvas-utils';
 
 export class NotePaneView implements IPrimitivePaneView {
@@ -38,13 +37,13 @@ class NotePaneRenderer implements IPrimitivePaneRenderer {
     const { context: ctx, horizontalPixelRatio } = scope;
     const pixelRatio = horizontalPixelRatio;
 
-    const viewport = (this._drawing as any).getViewport() as Viewport | null;
+    const viewport = this._drawing.getViewport();
     if (!viewport) return;
     if (!this._drawing.options.visible) return;
     if (!this._drawing.isValid()) return;
 
     const anchor = this._drawing.anchors[0];
-    const p = this.anchorToPixel(anchor, viewport);
+    const p = this._drawing.anchorToPixel(anchor, viewport);
     if (!p) return;
 
     const options = this._drawing.noteOptions;
@@ -168,12 +167,5 @@ class NotePaneRenderer implements IPrimitivePaneRenderer {
 
     // Convert back to hex
     return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
-  }
-
-  private anchorToPixel(anchor: { time: any; price: number }, viewport: Viewport): Point | null {
-    const x = viewport.timeScale.timeToCoordinate(anchor.time);
-    const y = viewport.priceScale.priceToCoordinate(anchor.price);
-    if (x === null || y === null) return null;
-    return { x, y };
   }
 }

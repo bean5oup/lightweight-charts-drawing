@@ -81,9 +81,9 @@ export function distanceToLineSegment(
 
   if (lengthSquared === 0) {
     // Line segment is a point
-    return Math.sqrt(
-      Math.pow(point.x - lineStart.x, 2) + Math.pow(point.y - lineStart.y, 2)
-    );
+    const ex = point.x - lineStart.x;
+    const ey = point.y - lineStart.y;
+    return Math.sqrt(ex * ex + ey * ey);
   }
 
   // Project point onto line, clamping to segment
@@ -92,10 +92,10 @@ export function distanceToLineSegment(
 
   const projectionX = lineStart.x + t * dx;
   const projectionY = lineStart.y + t * dy;
+  const px = point.x - projectionX;
+  const py = point.y - projectionY;
 
-  return Math.sqrt(
-    Math.pow(point.x - projectionX, 2) + Math.pow(point.y - projectionY, 2)
-  );
+  return Math.sqrt(px * px + py * py);
 }
 
 /**
@@ -111,9 +111,9 @@ export function distanceToLine(
   const lengthSquared = dx * dx + dy * dy;
 
   if (lengthSquared === 0) {
-    return Math.sqrt(
-      Math.pow(point.x - lineStart.x, 2) + Math.pow(point.y - lineStart.y, 2)
-    );
+    const ex = point.x - lineStart.x;
+    const ey = point.y - lineStart.y;
+    return Math.sqrt(ex * ex + ey * ey);
   }
 
   // Distance using cross product
@@ -129,7 +129,9 @@ export function distanceToLine(
  * Calculate distance between two points
  */
 export function distanceBetweenPoints(p1: Point, p2: Point): number {
-  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+  const dx = p2.x - p1.x;
+  const dy = p2.y - p1.y;
+  return Math.sqrt(dx * dx + dy * dy);
 }
 
 /**

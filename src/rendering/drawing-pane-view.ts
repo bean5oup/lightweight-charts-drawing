@@ -53,7 +53,7 @@ class DrawingPaneRenderer implements IPrimitivePaneRenderer {
     const pixelRatio = horizontalPixelRatio;
 
     // Get viewport
-    const viewport = (this._drawing as any).getViewport() as Viewport | null;
+    const viewport = this._drawing.getViewport();
     if (!viewport) return;
 
     // Check visibility
@@ -70,11 +70,11 @@ class DrawingPaneRenderer implements IPrimitivePaneRenderer {
       this.renderGeometry(ctx, geometry, viewport, pixelRatio);
     }
 
-    // Draw control points if selected or editing
+    // Draw control points if selected, editing, or hovered
     const state = this._drawing.state;
-    if (state === 'selected' || state === 'editing') {
+    if (state === 'selected' || state === 'editing' || state === 'hovered') {
       const controlPoints = this._drawing.getControlPoints(viewport);
-      drawControlPoints(ctx, controlPoints, null, pixelRatio);
+      drawControlPoints(ctx, controlPoints, null, pixelRatio, this._drawing.style.lineColor);
     }
   }
 
@@ -183,9 +183,7 @@ class DrawingPaneRenderer implements IPrimitivePaneRenderer {
 
     if (polygon.closed) {
       ctx.closePath();
-      if (ctx.fillStyle) {
-        ctx.fill();
-      }
+      ctx.fill();
     }
     ctx.stroke();
   }

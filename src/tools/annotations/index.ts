@@ -45,3 +45,19 @@ export { PriceLabelPaneView } from './price-label-pane-view';
 // FlagMark
 export { FlagMark, type FlagMarkOptions, type FlagColor } from './flag-mark';
 export { FlagMarkPaneView } from './flag-mark-pane-view';
+
+// Pin
+export { Pin, type PinOptions } from './pin';
+export { PinPaneView } from './pin-pane-view';
+
+// Comment
+export { Comment, type CommentOptions } from './comment';
+export { CommentPaneView } from './comment-pane-view';
+
+// Signpost
+export { Signpost, type SignpostOptions } from './signpost';
+export { SignpostPaneView } from './signpost-pane-view';
+
+// Table
+export { Table, type TableOptions } from './table';
+export { TablePaneView } from './table-pane-view';

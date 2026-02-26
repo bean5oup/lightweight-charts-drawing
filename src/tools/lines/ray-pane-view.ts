@@ -2,7 +2,6 @@ import type { IPrimitivePaneView, IPrimitivePaneRenderer } from 'lightweight-cha
 import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'fancy-canvas';
 
 import type { Ray } from './ray';
-import type { Point, Viewport } from '../../core/types';
 import { extendLineToViewport, getLineAngleDegrees, midpoint } from '../../core/geometry';
 import { applyStyle, drawLine, drawControlPoints, drawLabel } from '../../rendering/canvas-utils';
 
@@ -39,14 +38,14 @@ class RayPaneRenderer implements IPrimitivePaneRenderer {
     const { context: ctx, horizontalPixelRatio } = scope;
     const pixelRatio = horizontalPixelRatio;
 
-    const viewport = (this._drawing as any).getViewport() as Viewport | null;
+    const viewport = this._drawing.getViewport();
     if (!viewport) return;
     if (!this._drawing.options.visible) return;
     if (!this._drawing.isValid()) return;
 
     const anchors = this._drawing.anchors;
-    const start = this.anchorToPixel(anchors[0], viewport);
-    const end = this.anchorToPixel(anchors[1], viewport);
+    const start = this._drawing.anchorToPixel(anchors[0], viewport);
+    const end = this._drawing.anchorToPixel(anchors[1], viewport);
 
     if (!start || !end) return;
 
@@ -89,12 +88,5 @@ class RayPaneRenderer implements IPrimitivePaneRenderer {
       const controlPoints = this._drawing.getControlPoints(viewport);
       drawControlPoints(ctx, controlPoints, null, pixelRatio);
     }
-  }
-
-  private anchorToPixel(anchor: { time: any; price: number }, viewport: Viewport): Point | null {
-    const x = viewport.timeScale.timeToCoordinate(anchor.time);
-    const y = viewport.priceScale.priceToCoordinate(anchor.price);
-    if (x === null || y === null) return null;
-    return { x, y };
   }
 }
