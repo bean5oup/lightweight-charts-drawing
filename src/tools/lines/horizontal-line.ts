@@ -3,6 +3,7 @@ import type { IPrimitivePaneView } from 'lightweight-charts';
 import { Drawing } from '../../core/drawing';
 import type { Anchor, Point, Viewport, DrawingStyle, DrawingOptions, IDrawing } from '../../core/types';
 import type { Geometry, LineGeometry, TextGeometry } from '../../core/geometry';
+import { formatPrice } from '../../rendering/canvas-utils';
 import { HorizontalLinePaneView } from './horizontal-line-pane-view';
 
 /**
@@ -84,7 +85,7 @@ export class HorizontalLine extends Drawing {
 
     // Price label
     if (this._horizontalLineOptions.showPrice) {
-      const priceText = anchor.price.toFixed(2);
+      const priceText = formatPrice(anchor.price);
       geometries.push({
         type: 'text',
         position: { x: viewport.width - 5, y: y - 10 },

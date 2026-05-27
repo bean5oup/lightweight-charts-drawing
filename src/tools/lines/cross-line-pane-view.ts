@@ -2,7 +2,7 @@ import type { IPrimitivePaneView, IPrimitivePaneRenderer } from 'lightweight-cha
 import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'fancy-canvas';
 
 import type { CrossLine } from './cross-line';
-import { applyStyle, drawLine, drawControlPoints, drawLabel } from '../../rendering/canvas-utils';
+import { applyStyle, drawLine, drawControlPoints, drawLabel, formatPrice } from '../../rendering/canvas-utils';
 
 export class CrossLinePaneView implements IPrimitivePaneView {
   private _renderer: CrossLinePaneRenderer;
@@ -62,7 +62,7 @@ class CrossLinePaneRenderer implements IPrimitivePaneRenderer {
     if (options.showPrice) {
       drawLabel(
         ctx,
-        anchor.price.toFixed(2),
+        formatPrice(anchor.price),
         { x: viewport.width - 10, y },
         {
           font: this._drawing.style.labelFont || '12px sans-serif',

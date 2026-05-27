@@ -3,7 +3,7 @@ import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'f
 
 import type { Projection } from './projection';
 import type { Point } from '../../core/types';
-import { drawLine, drawControlPoints, drawDashedLine } from '../../rendering/canvas-utils';
+import { drawLine, drawControlPoints, drawDashedLine, formatPrice } from '../../rendering/canvas-utils';
 
 export class ProjectionPaneView implements IPrimitivePaneView {
   private _renderer: ProjectionPaneRenderer;
@@ -129,7 +129,7 @@ class ProjectionPaneRenderer implements IPrimitivePaneRenderer {
       const lines: string[] = [];
 
       if (options.showPrices) {
-        lines.push(`Target: $${info.targetPrice.toFixed(2)}`);
+        lines.push(`Target: $${formatPrice(info.targetPrice)}`);
       }
 
       if (options.showPercentage) {

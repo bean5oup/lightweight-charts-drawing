@@ -299,10 +299,16 @@ export function calculatePriceChange(startPrice: number, endPrice: number): {
 }
 
 /**
- * Format price for display
+ * Format price for display. When precision is omitted, picks decimals based on
+ * the price magnitude so sub-cent values don't render as "0.00".
  */
-export function formatPrice(price: number, precision: number = 2): string {
-  return price.toFixed(precision);
+export function formatPrice(price: number, precision?: number): string {
+  if (precision !== undefined) return price.toFixed(precision);
+  const abs = Math.abs(price);
+  if (abs === 0 || abs >= 1) return price.toFixed(2);
+  if (abs >= 0.01) return price.toFixed(4);
+  if (abs >= 0.0001) return price.toFixed(6);
+  return price.toFixed(8);
 }
 
 /**

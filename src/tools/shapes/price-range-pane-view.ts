@@ -2,7 +2,7 @@ import type { IPrimitivePaneView, IPrimitivePaneRenderer } from 'lightweight-cha
 import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'fancy-canvas';
 
 import type { PriceRange } from './price-range';
-import { applyStyle, drawLine, drawControlPoints, drawLabel } from '../../rendering/canvas-utils';
+import { applyStyle, drawLine, drawControlPoints, drawLabel, formatPrice } from '../../rendering/canvas-utils';
 
 export class PriceRangePaneView implements IPrimitivePaneView {
   private _renderer: PriceRangePaneRenderer;
@@ -72,7 +72,7 @@ class PriceRangePaneRenderer implements IPrimitivePaneRenderer {
     const labelParts: string[] = [];
 
     if (options.showRange) {
-      labelParts.push(`$${rangeInfo.range.toFixed(2)}`);
+      labelParts.push(`$${formatPrice(rangeInfo.range)}`);
     }
 
     if (options.showPercentage) {
@@ -100,7 +100,7 @@ class PriceRangePaneRenderer implements IPrimitivePaneRenderer {
     if (options.showPrices) {
       drawLabel(
         ctx,
-        rangeInfo.max.toFixed(2),
+        formatPrice(rangeInfo.max),
         { x: viewport.width - 10, y: top },
         {
           font: '11px sans-serif',
@@ -114,7 +114,7 @@ class PriceRangePaneRenderer implements IPrimitivePaneRenderer {
 
       drawLabel(
         ctx,
-        rangeInfo.min.toFixed(2),
+        formatPrice(rangeInfo.min),
         { x: viewport.width - 10, y: bottom },
         {
           font: '11px sans-serif',

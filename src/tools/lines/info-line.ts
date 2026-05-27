@@ -4,6 +4,7 @@ import { BaseLine } from './base-line';
 import type { Anchor, Point, DrawingStyle, DrawingOptions, IDrawing, Viewport } from '../../core/types';
 import type { Geometry, LineGeometry, TextGeometry } from '../../core/geometry';
 import { getLineAngleDegrees, midpoint, distanceBetweenPoints } from '../../core/geometry';
+import { formatPrice } from '../../rendering/canvas-utils';
 import { InfoLinePaneView } from './info-line-pane-view';
 
 /**
@@ -110,7 +111,7 @@ export class InfoLine extends BaseLine {
     if (this._infoLineOptions.showPriceChange) {
       const { absolute } = this.getPriceChange();
       const sign = absolute >= 0 ? '+' : '';
-      labelParts.push(`${sign}${absolute.toFixed(2)}`);
+      labelParts.push(`${sign}${formatPrice(absolute)}`);
     }
 
     if (this._infoLineOptions.showPercentChange) {

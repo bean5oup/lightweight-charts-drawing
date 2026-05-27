@@ -10,7 +10,7 @@ import type {
 import type { TrendLine } from './trend-line';
 import type { Point, Viewport } from '../../core/types';
 import { extendLineToViewport, midpoint, getLineAngleDegrees } from '../../core/geometry';
-import { applyStyle, drawLine, drawControlPoints, drawLabel } from '../../rendering/canvas-utils';
+import { applyStyle, drawLine, drawControlPoints, drawLabel, formatPrice } from '../../rendering/canvas-utils';
 
 /**
  * Specialized pane view for TrendLine with label support
@@ -140,7 +140,7 @@ class TrendLinePaneRenderer implements IPrimitivePaneRenderer {
     if (options.showPriceChange) {
       const { absolute } = this._drawing.getPriceChange();
       const sign = absolute >= 0 ? '+' : '';
-      labelParts.push(`${sign}${absolute.toFixed(2)}`);
+      labelParts.push(`${sign}${formatPrice(absolute)}`);
     }
 
     if (options.showPercentChange) {

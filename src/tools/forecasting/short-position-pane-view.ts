@@ -2,7 +2,7 @@ import type { IPrimitivePaneView, IPrimitivePaneRenderer } from 'lightweight-cha
 import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'fancy-canvas';
 
 import type { ShortPosition } from './short-position';
-import { drawLine, drawControlPoints } from '../../rendering/canvas-utils';
+import { drawLine, drawControlPoints, formatPrice } from '../../rendering/canvas-utils';
 
 export class ShortPositionPaneView implements IPrimitivePaneView {
   private _renderer: ShortPositionPaneRenderer;
@@ -103,7 +103,7 @@ class ShortPositionPaneRenderer implements IPrimitivePaneRenderer {
     ctx.fillStyle = '#2196F3';
     let entryText = 'Entry';
     if (options.showPrices) {
-      entryText += `: $${info.entry.toFixed(2)}`;
+      entryText += `: $${formatPrice(info.entry)}`;
     }
     ctx.fillText(entryText, labelX * pixelRatio, entry.y * pixelRatio);
 
@@ -111,7 +111,7 @@ class ShortPositionPaneRenderer implements IPrimitivePaneRenderer {
     ctx.fillStyle = '#ef5350';
     let slText = 'Stop';
     if (options.showPrices) {
-      slText += `: $${info.stopLoss.toFixed(2)}`;
+      slText += `: $${formatPrice(info.stopLoss)}`;
     }
     if (options.showPercentage) {
       slText += ` (-${info.riskPercent.toFixed(2)}%)`;
@@ -122,7 +122,7 @@ class ShortPositionPaneRenderer implements IPrimitivePaneRenderer {
     ctx.fillStyle = '#26a69a';
     let tpText = 'Target';
     if (options.showPrices) {
-      tpText += `: $${info.takeProfit.toFixed(2)}`;
+      tpText += `: $${formatPrice(info.takeProfit)}`;
     }
     if (options.showPercentage) {
       tpText += ` (+${info.rewardPercent.toFixed(2)}%)`;

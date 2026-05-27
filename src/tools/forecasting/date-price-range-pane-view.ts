@@ -2,7 +2,7 @@ import type { IPrimitivePaneView, IPrimitivePaneRenderer } from 'lightweight-cha
 import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'fancy-canvas';
 
 import type { DatePriceRange } from './date-price-range';
-import { drawLine, drawControlPoints } from '../../rendering/canvas-utils';
+import { drawLine, drawControlPoints, formatPrice } from '../../rendering/canvas-utils';
 
 export class DatePriceRangePaneView implements IPrimitivePaneView {
   private _renderer: DatePriceRangePaneRenderer;
@@ -101,7 +101,7 @@ class DatePriceRangePaneRenderer implements IPrimitivePaneRenderer {
 
     if (options.showPrices) {
       const sign = info.priceChange >= 0 ? '+' : '';
-      lines.push(`${sign}$${info.priceChange.toFixed(2)}`);
+      lines.push(`${sign}$${formatPrice(info.priceChange)}`);
     }
 
     if (options.showPercentage) {

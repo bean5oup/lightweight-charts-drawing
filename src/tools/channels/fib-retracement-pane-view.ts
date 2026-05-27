@@ -3,7 +3,7 @@ import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'f
 
 import type { FibRetracement } from './fib-retracement';
 import { FIBONACCI_LEVELS } from './fib-retracement';
-import { applyStyle, drawLine, drawControlPoints, drawLabel } from '../../rendering/canvas-utils';
+import { applyStyle, drawLine, drawControlPoints, drawLabel, formatPrice } from '../../rendering/canvas-utils';
 
 // Colors for different Fib levels
 const FIB_COLORS: Record<number, string> = {
@@ -126,7 +126,7 @@ class FibRetracementPaneRenderer implements IPrimitivePaneRenderer {
       }
 
       if (options.showPrices) {
-        labelParts.push(price.toFixed(2));
+        labelParts.push(formatPrice(price));
       }
 
       if (labelParts.length > 0) {

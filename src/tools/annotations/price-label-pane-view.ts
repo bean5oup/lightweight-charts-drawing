@@ -2,7 +2,7 @@ import type { IPrimitivePaneView, IPrimitivePaneRenderer } from 'lightweight-cha
 import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'fancy-canvas';
 
 import type { PriceLabel } from './price-label';
-import { drawControlPoints } from '../../rendering/canvas-utils';
+import { drawControlPoints, formatPrice } from '../../rendering/canvas-utils';
 
 export class PriceLabelPaneView implements IPrimitivePaneView {
   private _renderer: PriceLabelPaneRenderer;
@@ -50,7 +50,7 @@ class PriceLabelPaneRenderer implements IPrimitivePaneRenderer {
     const fontSize = (options.fontSize ?? 11) * pixelRatio;
     const backgroundColor = options.backgroundColor ?? '#2962FF';
     const textColor = options.textColor ?? '#FFFFFF';
-    const decimals = options.decimals ?? 2;
+    const decimals = options.decimals;
     const padding = 4 * pixelRatio;
     const arrowSize = 6 * pixelRatio;
 
@@ -71,7 +71,7 @@ class PriceLabelPaneRenderer implements IPrimitivePaneRenderer {
     ctx.setLineDash([]);
 
     // Draw price label on the right
-    const priceText = `$${anchor.price.toFixed(decimals)}`;
+    const priceText = `$${formatPrice(anchor.price, decimals)}`;
     ctx.font = `bold ${fontSize}px sans-serif`;
     const textMetrics = ctx.measureText(priceText);
     const textWidth = textMetrics.width;

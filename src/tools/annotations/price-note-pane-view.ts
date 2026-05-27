@@ -2,7 +2,7 @@ import type { IPrimitivePaneView, IPrimitivePaneRenderer } from 'lightweight-cha
 import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'fancy-canvas';
 
 import type { PriceNote } from './price-note';
-import { drawControlPoints } from '../../rendering/canvas-utils';
+import { drawControlPoints, formatPrice } from '../../rendering/canvas-utils';
 
 export class PriceNotePaneView implements IPrimitivePaneView {
   private _renderer: PriceNotePaneRenderer;
@@ -63,7 +63,7 @@ class PriceNotePaneRenderer implements IPrimitivePaneRenderer {
     const lines: { text: string; color: string }[] = [];
 
     if (options.showPrice) {
-      lines.push({ text: `$${anchor.price.toFixed(2)}`, color: priceColor });
+      lines.push({ text: `$${formatPrice(anchor.price)}`, color: priceColor });
     }
 
     if (options.note) {
@@ -71,7 +71,7 @@ class PriceNotePaneRenderer implements IPrimitivePaneRenderer {
     }
 
     if (lines.length === 0) {
-      lines.push({ text: `$${anchor.price.toFixed(2)}`, color: priceColor });
+      lines.push({ text: `$${formatPrice(anchor.price)}`, color: priceColor });
     }
 
     // Measure content

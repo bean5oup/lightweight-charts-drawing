@@ -3,7 +3,7 @@ import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'f
 
 import type { HorizontalRay } from './horizontal-ray';
 import type { Point } from '../../core/types';
-import { applyStyle, drawLine, drawControlPoints, drawLabel } from '../../rendering/canvas-utils';
+import { applyStyle, drawLine, drawControlPoints, drawLabel, formatPrice } from '../../rendering/canvas-utils';
 
 export class HorizontalRayPaneView implements IPrimitivePaneView {
   private _renderer: HorizontalRayPaneRenderer;
@@ -93,7 +93,7 @@ class HorizontalRayPaneRenderer implements IPrimitivePaneRenderer {
       const labelX = direction === 'right' ? viewport.width - 10 : 10;
       drawLabel(
         ctx,
-        anchor.price.toFixed(2),
+        formatPrice(anchor.price),
         { x: labelX, y },
         {
           font: this._drawing.style.labelFont || '12px sans-serif',

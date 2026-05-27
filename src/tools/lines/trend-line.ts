@@ -4,6 +4,7 @@ import { BaseLine } from './base-line';
 import type { Anchor, Point, DrawingStyle, DrawingOptions, IDrawing, Viewport } from '../../core/types';
 import type { Geometry, LineGeometry, TextGeometry } from '../../core/geometry';
 import { getLineAngleDegrees, midpoint } from '../../core/geometry';
+import { formatPrice } from '../../rendering/canvas-utils';
 import { TrendLinePaneView } from './trend-line-pane-view';
 
 /**
@@ -119,7 +120,7 @@ export class TrendLine extends BaseLine {
     if (this._trendLineOptions.showPriceChange) {
       const { absolute } = this.getPriceChange();
       const sign = absolute >= 0 ? '+' : '';
-      labelParts.push(`${sign}${absolute.toFixed(2)}`);
+      labelParts.push(`${sign}${formatPrice(absolute)}`);
     }
 
     if (this._trendLineOptions.showPercentChange) {

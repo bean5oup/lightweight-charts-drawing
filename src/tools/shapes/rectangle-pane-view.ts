@@ -3,7 +3,7 @@ import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'f
 
 import type { Rectangle } from './rectangle';
 import type { Point } from '../../core/types';
-import { applyStyle, drawRect, drawControlPoints, drawLabel } from '../../rendering/canvas-utils';
+import { applyStyle, drawRect, drawControlPoints, drawLabel, formatPrice } from '../../rendering/canvas-utils';
 
 export class RectanglePaneView implements IPrimitivePaneView {
   private _renderer: RectanglePaneRenderer;
@@ -75,7 +75,7 @@ class RectanglePaneRenderer implements IPrimitivePaneRenderer {
     // Draw dimensions if enabled
     if (this._drawing.rectangleOptions.showDimensions) {
       const priceRange = this._drawing.getPriceRange();
-      const labelText = `$${priceRange.range.toFixed(2)}`;
+      const labelText = `$${formatPrice(priceRange.range)}`;
       const centerX = topLeft.x + width / 2;
       const centerY = topLeft.y + height / 2;
 

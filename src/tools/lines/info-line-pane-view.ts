@@ -3,7 +3,7 @@ import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'f
 
 import type { InfoLine } from './info-line';
 import { getLineAngleDegrees, midpoint, distanceBetweenPoints } from '../../core/geometry';
-import { applyStyle, drawLine, drawControlPoints, drawLabel } from '../../rendering/canvas-utils';
+import { applyStyle, drawLine, drawControlPoints, drawLabel, formatPrice } from '../../rendering/canvas-utils';
 
 export class InfoLinePaneView implements IPrimitivePaneView {
   private _renderer: InfoLinePaneRenderer;
@@ -80,7 +80,7 @@ class InfoLinePaneRenderer implements IPrimitivePaneRenderer {
     if (options.showPriceChange) {
       const priceChange = this._drawing.getPriceChange();
       const sign = priceChange.absolute >= 0 ? '+' : '';
-      labelParts.push(`${sign}${priceChange.absolute.toFixed(2)}`);
+      labelParts.push(`${sign}${formatPrice(priceChange.absolute)}`);
     }
 
     if (options.showPercentChange) {

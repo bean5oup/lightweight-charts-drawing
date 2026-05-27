@@ -3,7 +3,7 @@ import type { CanvasRenderingTarget2D, BitmapCoordinatesRenderingScope } from 'f
 
 import type { FibExtension } from './fib-extension';
 import { FIB_EXTENSION_LEVELS } from './fib-extension';
-import { applyStyle, drawLine, drawControlPoints, drawLabel, drawDashedLine } from '../../rendering/canvas-utils';
+import { applyStyle, drawLine, drawControlPoints, drawLabel, drawDashedLine, formatPrice } from '../../rendering/canvas-utils';
 
 const FIB_COLORS: Record<number, string> = {
   0: '#787B86',
@@ -99,7 +99,7 @@ class FibExtensionPaneRenderer implements IPrimitivePaneRenderer {
       }
 
       if (options.showPrices) {
-        labelParts.push(price.toFixed(2));
+        labelParts.push(formatPrice(price));
       }
 
       if (labelParts.length > 0) {
