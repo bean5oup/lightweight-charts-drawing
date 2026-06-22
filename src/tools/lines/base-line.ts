@@ -3,7 +3,7 @@ import type { IPrimitivePaneView } from 'lightweight-charts';
 import { Drawing } from '../../core/drawing';
 import type { Anchor, Point, Viewport, DrawingStyle, DrawingOptions } from '../../core/types';
 import type { Geometry, LineGeometry } from '../../core/geometry';
-import { distanceToLineSegment, distanceToLine } from '../../core/geometry';
+import { distanceToLineSegment } from '../../core/geometry';
 import { DrawingPaneView } from '../../rendering/drawing-pane-view';
 
 /**
@@ -66,17 +66,8 @@ export abstract class BaseLine extends Drawing {
 
     if (!start || !end) return false;
 
-    // Check if line is extended
-    const isExtended = this._options.extendLeft || this._options.extendRight;
-
-    let distance: number;
-    if (isExtended) {
-      // Use infinite line distance
-      distance = distanceToLine(point, start, end);
-    } else {
-      // Use segment distance
-      distance = distanceToLineSegment(point, start, end);
-    }
+    // Use segment distance
+    let distance: number = distanceToLineSegment(point, start, end, this._options.extendLeft, this._options.extendRight);
 
     return distance <= BaseLine.HIT_THRESHOLD;
   }

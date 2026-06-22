@@ -73,7 +73,9 @@ export type Geometry =
 export function distanceToLineSegment(
   point: Point,
   lineStart: Point,
-  lineEnd: Point
+  lineEnd: Point,
+  extendLeft: boolean = false,
+  extendRight: boolean = false
 ): number {
   const dx = lineEnd.x - lineStart.x;
   const dy = lineEnd.y - lineStart.y;
@@ -88,8 +90,9 @@ export function distanceToLineSegment(
 
   // Project point onto line, clamping to segment
   let t = ((point.x - lineStart.x) * dx + (point.y - lineStart.y) * dy) / lengthSquared;
-  t = Math.max(0, Math.min(1, t));
-
+  if (!extendLeft) t = Math.max(0, t);
+  if (!extendRight) t = Math.min(1, t);
+  
   const projectionX = lineStart.x + t * dx;
   const projectionY = lineStart.y + t * dy;
   const px = point.x - projectionX;
