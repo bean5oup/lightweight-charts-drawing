@@ -25,10 +25,10 @@
     "build:demo": "vite build --config vite.demo.config.ts"
   },
   "peerDependencies": {
-    "lightweight-charts": "^5.0.0"
+    "lightweight-charts": "^5.2.0"
   },
   "devDependencies": {
-    "lightweight-charts": "^5.0.9",
+    "lightweight-charts": "^5.2.0",
     "typescript": "^5.7.2",
     "vite": "^6.0.3",
     "vite-plugin-dts": "^4.3.0"
